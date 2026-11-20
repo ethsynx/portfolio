@@ -1,6 +1,6 @@
 /**
- * Tipos y constantes de los proyectos, compartidos entre la web pública,
- * el panel /admin y el servidor. No contiene código de servidor.
+ * Tipos y constantes de los proyectos. Los proyectos en sí están en
+ * src/config/proyectos.ts.
  */
 
 export const CATEGORIAS = ["plugins", "bots", "networks"] as const;
@@ -35,20 +35,20 @@ export const NOMBRE_ESTADO: Record<EstadoDesarrollo, string> = {
   terminado: "Terminado",
 };
 
-export interface Archivo {
-  id: string;
-  /** Ruta desde la que se sirve, p. ej. /archivos/<id> */
-  url: string;
-  nombre: string;
-  tamano: number;
-  tipo: string;
+export interface Imagen {
+  /** Ruta dentro de public/, p. ej. "proyectos/miplugin/portada.png". */
+  archivo: string;
+  /** Descripción de la imagen para lectores de pantalla. */
   alt: string;
 }
 
 export interface Proyecto {
-  id: string;
   titulo: string;
   categoria: Categoria;
+  estado: EstadoDesarrollo;
+  /** false = no aparece en la web. */
+  publicado: boolean;
+  fecha: string;
   /** Frase corta para la tarjeta. */
   resumen: string;
   /** Qué problema quería resolver. */
@@ -58,39 +58,22 @@ export interface Proyecto {
   /** Cómo se puede probar. */
   comoProbar: string;
   tecnologias: string[];
-  fecha: string;
-  estadoDesarrollo: EstadoDesarrollo;
-  publicado: boolean;
-  portada: Archivo | null;
-  capturas: Archivo[];
-  descarga: Archivo | null;
+  portada: Imagen | null;
+  capturas: Imagen[];
+  /** Ruta dentro de public/ del archivo descargable, o "" si no hay. */
+  descarga: string;
   enlaces: { repositorio: string; demo: string; descargaExterna: string };
-  creadoEn: string;
-  actualizadoEn: string;
-  publicadoEn: string | null;
 }
 
-/** Límites de subida (se comprueban también en el servidor). */
-export const LIMITES = {
-  imagenBytes: 8 * 1024 * 1024,
-  descargaBytes: 50 * 1024 * 1024,
-  capturas: 10,
-  tecnologias: 12,
-} as const;
+/**
+ * Convierte una ruta de public/ en una URL que funciona aunque la web esté
+ * en una subcarpeta (p. ej. usuario.github.io/portfolio/).
+ */
+export function rutaPublica(archivo: string): string {
+  return import.meta.env.BASE_URL + archivo.replace(/^\/+/, "").replace(/^public\//, "");
+}
 
-export const EXTENSIONES_DESCARGA = [
-  ".jar",
-  ".zip",
-  ".7z",
-  ".rar",
-  ".tar.gz",
-  ".tgz",
-  ".mcpack",
-  ".mrpack",
-];
-
-export function formatearTamano(bytes: number): string {
-  if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`;
-  return `${(bytes / (1024 * 1024)).toFixed(1).replace(".", ",")} MB`;
+/** Nombre del archivo a partir de su ruta: "a/b/Plugin.jar" → "Plugin.jar". */
+export function nombreArchivo(archivo: string): string {
+  return archivo.split("/").pop() ?? archivo;
 }

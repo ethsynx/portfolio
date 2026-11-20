@@ -13,6 +13,9 @@ import appCss from "../styles.css?url";
 import { siteConfig } from "../config/site";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
+/** Carpeta en la que se publica la web (p. ej. "/portfolio/" en GitHub Pages). */
+const base = import.meta.env.BASE_URL;
+
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -62,7 +65,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
             Reintentar
           </button>
           <a
-            href="/"
+            href={base}
             className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
           >
             Volver al inicio
@@ -91,9 +94,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
-      { rel: "icon", href: "/favicon-32.png", type: "image/png", sizes: "32x32" },
-      { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
+      { rel: "icon", href: `${base}favicon.svg`, type: "image/svg+xml" },
+      { rel: "icon", href: `${base}favicon-32.png`, type: "image/png", sizes: "32x32" },
+      { rel: "apple-touch-icon", href: `${base}apple-touch-icon.png` },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {

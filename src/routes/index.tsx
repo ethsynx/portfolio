@@ -7,13 +7,12 @@ import { Hero } from "@/components/site/Hero";
 import { Navbar } from "@/components/site/Navbar";
 import { Projects } from "@/components/site/Projects";
 import { Unete } from "@/components/site/Unete";
+import { proyectos } from "@/config/proyectos";
 import { siteConfig } from "@/config/site";
-import { obtenerProyectosPublicados } from "@/lib/api";
+
+const publicados = proyectos.filter((p) => p.publicado);
 
 export const Route = createFileRoute("/")({
-  // Se consulta en cada visita: un proyecto publicado desde /admin aparece sin volver a desplegar.
-  loader: () => obtenerProyectosPublicados(),
-  staleTime: 0,
   head: () => ({
     meta: [
       { title: siteConfig.seo.title },
@@ -31,7 +30,6 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-  const proyectos = Route.useLoaderData();
   return (
     <div className="min-h-screen bg-background">
       <a
@@ -44,7 +42,7 @@ function Home() {
       <main id="contenido">
         <Hero />
         <About />
-        <Projects proyectos={proyectos} />
+        <Projects proyectos={publicados} />
         <Unete />
         <Contact />
       </main>

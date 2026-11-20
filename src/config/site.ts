@@ -3,8 +3,7 @@
  *  CONFIGURACIÓN DEL SITIO
  * =============================================================================
  *  Textos fijos de la web: estudio, identidad, «Sobre mí», «Únete», contacto y SEO.
- *  Los PROYECTOS no se editan aquí: se crean desde el panel privado /admin
- *  y se guardan en la base de datos.
+ *  Los PROYECTOS no se editan aquí: están en src/config/proyectos.ts.
  *
  *  Plantilla original diseñada y desarrollada por Electro.
  * =============================================================================

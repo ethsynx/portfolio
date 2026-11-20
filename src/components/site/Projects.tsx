@@ -9,7 +9,8 @@ import {
   NOMBRE_ESTADO,
   type Filtro,
   type Proyecto,
-  formatearTamano,
+  nombreArchivo,
+  rutaPublica,
 } from "@/lib/proyectos";
 import { cn } from "@/lib/utils";
 
@@ -66,7 +67,7 @@ export function Projects({ proyectos }: { proyectos: Proyecto[] }) {
           <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {visibles.map((proyecto, index) => (
               <ProjectCard
-                key={proyecto.id}
+                key={proyecto.titulo}
                 proyecto={proyecto}
                 delay={index * 50}
                 onOpen={() => setActivo(proyecto)}
@@ -99,7 +100,9 @@ export function ProjectCard({
   onOpen: () => void;
   delay?: number;
 }) {
-  const descarga = proyecto.descarga?.url || proyecto.enlaces.descargaExterna;
+  const descarga = proyecto.descarga
+    ? rutaPublica(proyecto.descarga)
+    : proyecto.enlaces.descargaExterna;
   return (
     <Reveal
       as="li"
@@ -114,7 +117,7 @@ export function ProjectCard({
       >
         {proyecto.portada ? (
           <img
-            src={proyecto.portada.url}
+            src={rutaPublica(proyecto.portada.archivo)}
             alt=""
             loading="lazy"
             width={1280}
@@ -176,7 +179,7 @@ export function ProjectCard({
             <a
               href={descarga}
               {...(proyecto.descarga
-                ? { download: proyecto.descarga.nombre }
+                ? { download: nombreArchivo(proyecto.descarga) }
                 : { target: "_blank", rel: "noreferrer" })}
               className={botonSecundario}
             >
@@ -198,12 +201,10 @@ export function ProjectCard({
           <span
             className={cn(
               "ml-auto font-mono text-[10px] tracking-wide uppercase",
-              proyecto.estadoDesarrollo === "en-desarrollo"
-                ? "text-warning"
-                : "text-muted-foreground",
+              proyecto.estado === "en-desarrollo" ? "text-warning" : "text-muted-foreground",
             )}
           >
-            {NOMBRE_ESTADO[proyecto.estadoDesarrollo]}
+            {NOMBRE_ESTADO[proyecto.estado]}
           </span>
         </div>
       </div>
@@ -211,15 +212,13 @@ export function ProjectCard({
   );
 }
 
-/** Ficha del proyecto. El panel /admin la usa también para la vista previa. */
+/** Ficha completa del proyecto. */
 export function ProjectModal({
   proyecto,
   onClose,
-  vistaPrevia = false,
 }: {
   proyecto: Proyecto | null;
   onClose: () => void;
-  vistaPrevia?: boolean;
 }) {
   const closeRef = useRef<HTMLButtonElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -273,16 +272,11 @@ export function ProjectModal({
       }}
     >
       <div className="my-auto w-full max-w-3xl">
-        {vistaPrevia ? (
-          <p className="mb-2 text-center font-mono text-[11px] tracking-wide text-warning uppercase">
-            Vista previa · así verá la ficha un visitante
-          </p>
-        ) : null}
         <div className="panel animate-in fade-in zoom-in-95 w-full duration-200">
           <div className="sticky top-0 z-10 flex items-start justify-between gap-4 rounded-t-lg border-b border-border bg-surface px-5 py-4">
             <div>
               <p className="label-mono">
-                {NOMBRE_CATEGORIA[proyecto.categoria]} · {NOMBRE_ESTADO[proyecto.estadoDesarrollo]}
+                {NOMBRE_CATEGORIA[proyecto.categoria]} · {NOMBRE_ESTADO[proyecto.estado]}
                 {proyecto.fecha ? ` · ${proyecto.fecha}` : ""}
               </p>
               <h3 id="ficha-titulo" className="mt-1 text-xl font-semibold">
@@ -302,7 +296,7 @@ export function ProjectModal({
 
           {proyecto.portada ? (
             <img
-              src={proyecto.portada.url}
+              src={rutaPublica(proyecto.portada.archivo)}
               alt={proyecto.portada.alt || `Portada de ${proyecto.titulo}`}
               width={1280}
               height={720}
@@ -350,13 +344,18 @@ export function ProjectModal({
                 <div className="mt-2 grid gap-3 sm:grid-cols-2">
                   {proyecto.capturas.map((captura) => (
                     <a
-                      key={captura.id}
-                      href={captura.url}
+                      key={captura.archivo}
+                      href={rutaPublica(captura.archivo)}
                       target="_blank"
                       rel="noreferrer"
                       className="block overflow-hidden rounded-sm border border-border"
                     >
-                      <img src={captura.url} alt={captura.alt} loading="lazy" className="w-full" />
+                      <img
+                        src={rutaPublica(captura.archivo)}
+                        alt={captura.alt}
+                        loading="lazy"
+                        className="w-full"
+                      />
                       <span className="sr-only"> (abrir a tamaño completo)</span>
                     </a>
                   ))}
@@ -368,15 +367,12 @@ export function ProjectModal({
               <div className="flex flex-wrap gap-2 border-t border-border pt-5">
                 {proyecto.descarga ? (
                   <a
-                    href={proyecto.descarga.url}
-                    download={proyecto.descarga.nombre}
+                    href={rutaPublica(proyecto.descarga)}
+                    download={nombreArchivo(proyecto.descarga)}
                     className="inline-flex items-center gap-1.5 rounded-sm bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary-hover"
                   >
                     <Download className="size-3.5" aria-hidden="true" /> Descargar{" "}
-                    {proyecto.descarga.nombre}
-                    <span className="font-mono text-[11px] opacity-80">
-                      ({formatearTamano(proyecto.descarga.tamano)})
-                    </span>
+                    {nombreArchivo(proyecto.descarga)}
                   </a>
                 ) : null}
                 {enlaces.descargaExterna ? (
