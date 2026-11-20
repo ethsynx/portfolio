@@ -6,7 +6,6 @@ import { Footer } from "@/components/site/Footer";
 import { Hero } from "@/components/site/Hero";
 import { Navbar } from "@/components/site/Navbar";
 import { Projects } from "@/components/site/Projects";
-import { Unete } from "@/components/site/Unete";
 import { proyectos } from "@/config/proyectos";
 import { siteConfig } from "@/config/site";
 
@@ -43,7 +42,6 @@ function Home() {
         <Hero />
         <About />
         <Projects proyectos={publicados} />
-        <Unete />
         <Contact />
       </main>
       <Footer />

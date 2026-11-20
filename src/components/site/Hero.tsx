@@ -28,7 +28,7 @@ export function Hero() {
             </span>
             <span>
               <span className="block font-display text-base font-semibold sm:text-lg">
-                {siteConfig.studio}
+                {siteConfig.name}
               </span>
               <span className="label-mono">Plugins · Bots · Networks</span>
             </span>

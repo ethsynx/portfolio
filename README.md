@@ -1,6 +1,6 @@
-# NexStudios
+# Portfolio de Diego
 
-Web de NexStudios (plugins de Minecraft, bots de Discord, networks y splitters).
+Portfolio personal de Diego (plugins de Minecraft, bots de Discord, networks y splitters).
 Es una web estática publicada gratis en **GitHub Pages**: https://ethsynx.github.io/portfolio/
 
 Basado en la plantilla **Minecraft Server Developer Portfolio** de **Electro** (licencia MIT).

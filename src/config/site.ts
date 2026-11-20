@@ -2,7 +2,7 @@
  * =============================================================================
  *  CONFIGURACIÓN DEL SITIO
  * =============================================================================
- *  Textos fijos de la web: estudio, identidad, «Sobre mí», «Únete», contacto y SEO.
+ *  Textos fijos de la web: identidad, «Sobre mí», contacto y SEO.
  *  Los PROYECTOS no se editan aquí: están en src/config/proyectos.ts.
  *
  *  Plantilla original diseñada y desarrollada por Electro.
@@ -10,11 +10,8 @@
  */
 
 export const siteConfig = {
-  /** ------------------------------------------------------------------ ESTUDIO */
-  /** Nombre que acompaña al logo en la cabecera, el pie y el panel. */
-  studio: "NexStudios",
-
   /** ---------------------------------------------------------------- IDENTIDAD */
+  /** Nombre que acompaña al logo en la cabecera, la portada y el pie. */
   name: "Diego",
   age: 17,
   country: "España",
@@ -36,35 +33,6 @@ export const siteConfig = {
     ],
   },
 
-  /** --------------------------------------------------------------------- ÚNETE */
-  recruiting: {
-    title: "Buscamos más developers",
-    description:
-      "NexStudios está creciendo y queremos sumar gente que disfrute creando para Minecraft y Discord.",
-    roles: [
-      {
-        icon: "plugin",
-        title: "Desarrollo de plugins",
-        description: "Programar plugins propios para servidores de Minecraft.",
-        tags: ["Java", "Paper / Spigot"],
-      },
-      {
-        icon: "bot",
-        title: "Bots de Discord",
-        description: "Crear bots y comandos para comunidades de Discord.",
-        tags: ["JavaScript", "Python"],
-      },
-      {
-        icon: "network",
-        title: "Networks y splitters",
-        description: "Configurar proxies, networks y splitters para conectar varios servidores.",
-        tags: ["Velocity", "BungeeCord", "Linux"],
-      },
-    ],
-    howTo:
-      "Escríbeme por Discord y cuéntame qué sabes hacer. Si tienes algún proyecto, mándame un enlace o una captura.",
-  },
-
   /** ------------------------------------------------------------------ CONTACTO */
   contact: {
     heading: "¿Tienes una idea para tu servidor?",
@@ -80,15 +48,14 @@ export const siteConfig = {
 
   /** --------------------------------------------------------------------- SEO */
   seo: {
-    title: "NexStudios · Plugins de Minecraft, bots de Discord y networks",
+    title: "Diego · Plugins de Minecraft, bots de Discord y networks",
     description:
-      "NexStudios: plugins propios de Minecraft, bots de Discord y configuración de networks y splitters. Buscamos más developers.",
+      "Portfolio de Diego: plugins propios de Minecraft, bots de Discord y configuración de networks y splitters.",
   },
 } as const;
 
 export const navLinks = [
   { label: "Sobre mí", href: "#sobre-mi" },
   { label: "Proyectos", href: "#proyectos" },
-  { label: "Únete", href: "#unete" },
   { label: "Contacto", href: "#contacto" },
 ];

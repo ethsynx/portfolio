@@ -13,7 +13,7 @@ export function Footer() {
             <span className="flex size-8 items-center justify-center rounded-sm border border-border-strong bg-surface-2">
               <Logo className="h-3.5" />
             </span>
-            <span className="font-display text-sm font-semibold">{siteConfig.studio}</span>
+            <span className="font-display text-sm font-semibold">{siteConfig.name}</span>
           </div>
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
             {siteConfig.footer.description}
@@ -50,7 +50,7 @@ export function Footer() {
       <div className="border-t border-border">
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-4 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
           <p className="font-mono text-[11px] text-muted-foreground">
-            © {new Date().getFullYear()} {siteConfig.studio}
+            © {new Date().getFullYear()} {siteConfig.name}
           </p>
           <p className="flex items-center gap-2 font-mono text-[11px] text-muted-foreground">
             <PixelMark />

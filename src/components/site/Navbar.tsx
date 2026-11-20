@@ -39,13 +39,13 @@ export function Navbar() {
       >
         <a
           href="#inicio"
-          aria-label={`${siteConfig.studio}, ir al inicio`}
+          aria-label={`${siteConfig.name}, ir al inicio`}
           className="flex items-center gap-2.5 font-display text-sm font-semibold tracking-tight"
         >
           <span className="flex size-8 items-center justify-center rounded-sm border border-border-strong bg-surface-2">
             <Logo className="h-3.5" />
           </span>
-          <span>{siteConfig.studio}</span>
+          <span>{siteConfig.name}</span>
         </a>
 
         <ul className="ml-auto hidden items-center gap-1 lg:flex">
